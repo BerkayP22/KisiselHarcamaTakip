@@ -1,0 +1,70 @@
+@model IReadOnlyList<KisiselHarcamaTakip.Core.Entities.Islem>
+@{
+    ViewData["Title"] = "İşlemler";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+    <div>
+        <h1>İşlemler</h1>
+        <p class="text-muted mb-0">Gelir ve gider kayıtlarınız.</p>
+    </div>
+    <div class="d-flex gap-2">
+        <a class="btn btn-outline-primary" asp-controller="Gelir" asp-action="Create">Gelir ekle</a>
+        <a class="btn btn-primary" asp-controller="Gider" asp-action="Create">Gider ekle</a>
+    </div>
+</div>
+
+@if (TempData["SuccessMessage"] is string successMessage)
+{
+    <div class="alert alert-success" role="status">@successMessage</div>
+}
+
+@if (Model.Count == 0)
+{
+    <div class="alert alert-info">Henüz işlem kaydı bulunmuyor.</div>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead>
+                <tr>
+                    <th scope="col">Tarih</th>
+                    <th scope="col">Tür</th>
+                    <th scope="col">Açıklama</th>
+                    <th scope="col">Kategori</th>
+                    <th scope="col" class="text-end">Tutar</th>
+                    <th scope="col">İşlemler</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var islem in Model)
+                {
+                    var gelirMi = islem.Tur == KisiselHarcamaTakip.Core.Entities.IslemTuru.Gelir;
+                    <tr>
+                        <td>@islem.Tarih.ToString("dd.MM.yyyy")</td>
+                        <td>
+                            @if (gelirMi)
+                            {
+                                <span class="badge kht-badge-gelir">Gelir</span>
+                            }
+                            else
+                            {
+                                <span class="badge kht-badge-gider">Gider</span>
+                            }
+                        </td>
+                        <td>@islem.Aciklama</td>
+                        <td>@(islem.Kategori?.Ad ?? "—")</td>
+                        <td class="text-end @(gelirMi ? "kht-amount-gelir" : "kht-amount-gider")">
+                            @(gelirMi ? "+" : "-")@islem.Tutar.ToString("N2") ₺
+                        </td>
+                        <td class="text-nowrap">
+                            <a class="btn btn-sm btn-outline-primary" asp-action="Edit" asp-route-id="@islem.Id">Düzenle</a>
+                            <a class="btn btn-sm btn-outline-danger" asp-action="Delete" asp-route-id="@islem.Id">Sil</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
