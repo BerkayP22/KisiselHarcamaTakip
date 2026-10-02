@@ -1,0 +1,46 @@
+@using System.Globalization
+@model AylikOzetViewModel
+@{
+    ViewData["Title"] = "Aylık toplamlar";
+    var turkce = CultureInfo.GetCultureInfo("tr-TR");
+}
+
+<h1>Aylık toplamlar</h1>
+<p class="text-muted">@Model.AyBasligi için gelir, gider ve net bakiye özeti.</p>
+
+<form asp-action="Index" method="get" class="row g-2 align-items-end mb-4">
+    <div class="col-auto">
+        <label for="ay" class="form-label">Ay seçin</label>
+        <input id="ay" name="ay" type="month" value="@Model.SecilenAy" class="form-control" />
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary">Göster</button>
+    </div>
+</form>
+
+<div class="row g-3">
+    <div class="col-md-4">
+        <section class="card kht-stat kht-stat-success h-100">
+            <div class="card-body">
+                <h2 class="h6 text-muted mb-1">Toplam gelir</h2>
+                <p class="fs-3 fw-semibold kht-amount-gelir mb-0">+@Model.ToplamGelir.ToString("N2", turkce) ₺</p>
+            </div>
+        </section>
+    </div>
+    <div class="col-md-4">
+        <section class="card kht-stat kht-stat-danger h-100">
+            <div class="card-body">
+                <h2 class="h6 text-muted mb-1">Toplam gider</h2>
+                <p class="fs-3 fw-semibold kht-amount-gider mb-0">-@Model.ToplamGider.ToString("N2", turkce) ₺</p>
+            </div>
+        </section>
+    </div>
+    <div class="col-md-4">
+        <section class="card kht-stat h-100">
+            <div class="card-body">
+                <h2 class="h6 text-muted mb-1">Net bakiye</h2>
+                <p class="fs-3 fw-semibold mb-0">@Model.NetBakiye.ToString("N2", turkce) ₺</p>
+            </div>
+        </section>
+    </div>
+</div>
