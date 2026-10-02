@@ -1,0 +1,46 @@
+@model GelirOlusturViewModel
+@{
+    ViewData["Title"] = "Gelir ekle";
+}
+
+<h1>Gelir ekle</h1>
+<p class="text-muted">Gelir bilgilerini girerek kaydedin.</p>
+
+@if (TempData["SuccessMessage"] is string successMessage)
+{
+    <div class="alert alert-success" role="status">@successMessage</div>
+}
+
+<div class="row">
+    <div class="col-md-7 col-lg-6">
+        <div class="kht-form-card">
+            <form asp-action="Create" method="post" novalidate>
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                <div class="mb-3">
+                    <label asp-for="Aciklama" class="form-label"></label>
+                    <input asp-for="Aciklama" class="form-control" autofocus />
+                    <span asp-validation-for="Aciklama" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Tutar" class="form-label"></label>
+                    <input id="Tutar" name="Tutar" value="@(ViewData.ModelState["Tutar"]?.AttemptedValue ?? Model.Tutar.ToString(System.Globalization.CultureInfo.InvariantCulture))" class="form-control" type="text" inputmode="decimal" placeholder="Örn. 1.250,50" autocomplete="off" />
+                    <span asp-validation-for="Tutar" class="text-danger"></span>
+                    <div class="form-text">Virgül veya nokta ile ondalık girebilirsiniz.</div>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Tarih" class="form-label"></label>
+                    <input asp-for="Tarih" class="form-control" />
+                    <span asp-validation-for="Tarih" class="text-danger"></span>
+                </div>
+                <div class="d-flex gap-2 mt-4">
+                    <button type="submit" class="btn btn-primary">Geliri kaydet</button>
+                    <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary">İptal</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
