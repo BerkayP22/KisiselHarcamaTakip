@@ -1,0 +1,39 @@
+@{
+    ViewData["Title"] = "Ana sayfa";
+}
+
+<div class="py-2">
+    <h1 class="display-6 mb-2">Kişisel Harcama Takibi</h1>
+    <p class="lead text-muted">Gelir ve giderlerinizi kaydedin, işlemlerinizi yönetin ve aylık bütçe özetinizi görün.</p>
+</div>
+
+<div class="row g-3 mt-1">
+    <div class="col-sm-6 col-lg-3">
+        <a class="kht-action-card" asp-controller="Gelir" asp-action="Create">
+            <span class="kht-action-icon bg-gelir" aria-hidden="true">＋</span>
+            <span class="kht-action-title">Gelir ekle</span>
+            <p class="kht-action-desc">Yeni bir gelir kaydı oluşturun.</p>
+        </a>
+    </div>
+    <div class="col-sm-6 col-lg-3">
+        <a class="kht-action-card" asp-controller="Gider" asp-action="Create">
+            <span class="kht-action-icon bg-gider" aria-hidden="true">－</span>
+            <span class="kht-action-title">Gider ekle</span>
+            <p class="kht-action-desc">Yeni bir gider kaydı oluşturun.</p>
+        </a>
+    </div>
+    <div class="col-sm-6 col-lg-3">
+        <a class="kht-action-card" asp-controller="Islem" asp-action="Index">
+            <span class="kht-action-icon bg-islem" aria-hidden="true">☰</span>
+            <span class="kht-action-title">İşlemleri görüntüle</span>
+            <p class="kht-action-desc">Tüm gelir ve gider kayıtlarını listeleyin.</p>
+        </a>
+    </div>
+    <div class="col-sm-6 col-lg-3">
+        <a class="kht-action-card" asp-controller="AylikOzet" asp-action="Index">
+            <span class="kht-action-icon bg-ozet" aria-hidden="true">▣</span>
+            <span class="kht-action-title">Aylık özeti gör</span>
+            <p class="kht-action-desc">Seçtiğiniz aya göre toplam gelir, gider ve net bakiye.</p>
+        </a>
+    </div>
+</div>
