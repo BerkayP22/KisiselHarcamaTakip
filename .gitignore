@@ -1,0 +1,25 @@
+## .NET
+bin/
+obj/
+*.user
+*.suo
+
+## Veritabanı (SQLite)
+*.db
+*.db-shm
+*.db-wal
+
+## IDE
+.vs/
+.vscode/
+*.swp
+
+## İşletim sistemi
+.DS_Store
+Thumbs.db
+
+## Üçüncü parti istemci kütüphaneleri (LibMan ile geri yüklenir)
+src/KisiselHarcamaTakip.Web/wwwroot/lib/
+
+## Geliştirme/inceleme sırasında kullanılan geçici betikler
+run-test*.bat
