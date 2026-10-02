@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Kişisel Harcama Takibi</title>
+    <script>
+        // Tema, sayfa çizilmeden önce uygulanır (geçişte "yanıp sönme" olmasın diye).
+        (function () {
+            try {
+                var kayitliTema = localStorage.getItem('kht-tema');
+                var tema = kayitliTema || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+                document.documentElement.setAttribute('data-theme', tema);
+            } catch (e) { /* localStorage yoksa varsayılan (açık) tema kullanılır */ }
+        })();
+    </script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/KisiselHarcamaTakip.Web.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm kht-navbar mb-4 sticky-top">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <span aria-hidden="true">💰</span> Kişisel Harcama Takip
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Ana sayfa</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Kategori" asp-action="Index">Kategoriler</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Gelir" asp-action="Create">Gelir ekle</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Gider" asp-action="Create">Gider ekle</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Islem" asp-action="Index">İşlemler</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="AylikOzet" asp-action="Index">Aylık özet</a>
+                        </li>
+                    </ul>
+                    <button type="button" class="kht-theme-toggle" id="kht-theme-toggle" title="Açık/koyu tema" aria-label="Açık/koyu temayı değiştir">
+                        <span id="kht-theme-icon" aria-hidden="true">🌙</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-4">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="footer text-muted">
+        <div class="container text-center">
+            &copy; @DateTime.Now.Year - Kişisel Harcama Takibi - <a asp-area="" asp-controller="Home" asp-action="Privacy">Gizlilik</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        (function () {
+            var dugme = document.getElementById('kht-theme-toggle');
+            var ikon = document.getElementById('kht-theme-icon');
+            function simgeyiGuncelle() {
+                var aktif = document.documentElement.getAttribute('data-theme') === 'dark';
+                if (ikon) { ikon.textContent = aktif ? '☀️' : '🌙'; }
+            }
+            simgeyiGuncelle();
+            if (dugme) {
+                dugme.addEventListener('click', function () {
+                    var mevcut = document.documentElement.getAttribute('data-theme');
+                    var yeni = mevcut === 'dark' ? 'light' : 'dark';
+                    document.documentElement.setAttribute('data-theme', yeni);
+                    try { localStorage.setItem('kht-tema', yeni); } catch (e) { /* yoksayılır */ }
+                    simgeyiGuncelle();
+                });
+            }
+        })();
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
