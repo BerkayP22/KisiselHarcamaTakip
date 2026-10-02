@@ -1,0 +1,43 @@
+@model IslemSilViewModel
+@{
+    ViewData["Title"] = "İşlemi sil";
+}
+
+<h1>İşlemi sil</h1>
+<div class="alert alert-warning" role="alert">Bu işlem kalıcı olarak silinecek. Devam etmek istiyor musunuz?</div>
+
+<div class="row">
+    <div class="col-md-7 col-lg-6">
+        <div class="kht-form-card">
+            <dl class="row mb-4">
+                <dt class="col-sm-4">Tür</dt>
+                <dd class="col-sm-8">
+                    @if (Model.Tur == KisiselHarcamaTakip.Core.Entities.IslemTuru.Gelir)
+                    {
+                        <span class="badge kht-badge-gelir">Gelir</span>
+                    }
+                    else
+                    {
+                        <span class="badge kht-badge-gider">Gider</span>
+                    }
+                </dd>
+                <dt class="col-sm-4">Açıklama</dt>
+                <dd class="col-sm-8">@Model.Aciklama</dd>
+                <dt class="col-sm-4">Tarih</dt>
+                <dd class="col-sm-8">@Model.Tarih.ToString("dd.MM.yyyy")</dd>
+                <dt class="col-sm-4">Kategori</dt>
+                <dd class="col-sm-8">@(Model.KategoriAdi ?? "—")</dd>
+                <dt class="col-sm-4">Tutar</dt>
+                <dd class="col-sm-8">@Model.Tutar.ToString("N2") ₺</dd>
+            </dl>
+
+            <form asp-action="Delete" method="post">
+                <input asp-for="Id" type="hidden" />
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-danger">Evet, sil</button>
+                    <a asp-action="Index" class="btn btn-outline-secondary">Vazgeç</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
