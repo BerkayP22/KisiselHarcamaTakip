@@ -1,0 +1,30 @@
+@model KisiselHarcamaTakip.Web.Models.KategoriOlusturViewModel
+@{
+    ViewData["Title"] = "Kategori ekle";
+}
+
+<h1>Kategori ekle</h1>
+<p class="text-muted">Yeni bir harcama kategorisi oluşturun.</p>
+
+<div class="row">
+    <div class="col-md-7 col-lg-6">
+        <div class="kht-form-card">
+            <form asp-action="Create" method="post" novalidate>
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                <div class="mb-3">
+                    <label asp-for="Ad" class="form-label"></label>
+                    <input asp-for="Ad" class="form-control" autofocus />
+                    <span asp-validation-for="Ad" class="text-danger"></span>
+                </div>
+                <div class="d-flex gap-2 mt-4">
+                    <button type="submit" class="btn btn-primary">Kaydet</button>
+                    <a asp-action="Index" class="btn btn-outline-secondary">İptal</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
