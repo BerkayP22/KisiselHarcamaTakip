@@ -1,0 +1,379 @@
+/* Kişisel Harcama Takibi - modern görünüm
+   Bootstrap 5 üzerine ince bir tasarım katmanı; harici bir servise veya yazı
+   tipine bağımlılık yok, tamamen yerel çalışır.
+   Tasarım dili https://github.com/canogluy06-byte/Ordinaryunus projesinden
+   ilham alınarak uyarlandı: teal vurgu rengi, yuvarlatılmış köşeler,
+   katmanlı gölgeler ve açık/koyu tema desteği. */
+
+:root {
+  --teal: #0F766E;
+  --teal-dark: #0b5a54;
+  --on-teal: #ffffff;
+  --success: #16a34a;
+  --success-bg: #ecfdf3;
+  --danger: #dc2626;
+  --danger-bg: #fef2f2;
+
+  --bg: #F7F7F5;
+  --surface: #ffffff;
+  --surface-2: #f1f2f0;
+  --border: #e3e5e1;
+  --text: #1b1f1e;
+  --text-muted: #5b6460;
+
+  --r-card: 16px;
+  --r-btn: 12px;
+  --r-sm: 10px;
+  --r-chip: 999px;
+
+  --shadow-1: 0 1px 2px rgba(16, 24, 40, 0.04), 0 8px 24px -10px rgba(16, 24, 40, 0.10);
+  --shadow-2: 0 4px 6px rgba(16, 24, 40, 0.04), 0 14px 28px -12px rgba(16, 24, 40, 0.18);
+
+  --font-ui: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  color-scheme: light;
+}
+
+html[data-theme="dark"] {
+  --teal: #2DB5A5;
+  --teal-dark: #23897d;
+  --on-teal: #06231f;
+
+  --success: #34d399;
+  --success-bg: rgba(52, 211, 153, 0.12);
+  --danger: #f87171;
+  --danger-bg: rgba(248, 113, 113, 0.12);
+
+  --bg: #0E1417;
+  --surface: #161d21;
+  --surface-2: #1d2529;
+  --border: #2a3338;
+  --text: #e9edec;
+  --text-muted: #9aa5a1;
+
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px -10px rgba(0, 0, 0, 0.5);
+  --shadow-2: 0 4px 6px rgba(0, 0, 0, 0.3), 0 14px 28px -12px rgba(0, 0, 0, 0.6);
+  color-scheme: dark;
+}
+
+* { transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease; }
+
+html {
+  font-size: 15px;
+  position: relative;
+  min-height: 100%;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-ui);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+a {
+  color: var(--teal);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--teal-dark);
+}
+
+h1, .h1 {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+/* Navbar */
+.navbar.kht-navbar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  box-shadow: var(--shadow-1);
+}
+
+.kht-navbar .navbar-brand {
+  color: var(--text);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: normal;
+}
+
+.kht-navbar .nav-link {
+  color: var(--text-muted) !important;
+  font-weight: 600;
+  border-radius: var(--r-sm);
+  padding: 0.5rem 0.85rem !important;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.kht-navbar .nav-link:hover,
+.kht-navbar .nav-link.active {
+  color: var(--on-teal) !important;
+  background-color: var(--teal);
+}
+
+.kht-navbar .navbar-toggler {
+  border-color: var(--border);
+}
+
+.kht-theme-toggle {
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text);
+  border-radius: var(--r-chip);
+  width: 2.3rem;
+  height: 2.3rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.05rem;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.kht-theme-toggle:hover {
+  border-color: var(--teal);
+}
+
+/* Kartlar */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-card);
+  box-shadow: var(--shadow-1);
+  color: var(--text);
+}
+
+.card.kht-stat {
+  border-top: 4px solid var(--teal);
+}
+
+.card.kht-stat.kht-stat-success {
+  border-top-color: var(--success);
+}
+
+.card.kht-stat.kht-stat-danger {
+  border-top-color: var(--danger);
+}
+
+/* Formlar */
+.kht-form-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-card);
+  box-shadow: var(--shadow-1);
+  padding: 1.75rem;
+}
+
+.form-control, .form-select {
+  background-color: var(--surface-2);
+  color: var(--text);
+  border-radius: var(--r-sm);
+  border: 1.5px solid var(--border);
+  padding-top: 0.55rem;
+  padding-bottom: 0.55rem;
+}
+
+.form-control:focus, .form-select:focus {
+  background-color: var(--surface-2);
+  color: var(--text);
+  border-color: var(--teal);
+  box-shadow: 0 0 0 0.2rem rgba(15, 118, 110, 0.15);
+}
+
+.form-label {
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: var(--text);
+}
+
+.form-text {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* Butonlar */
+.btn {
+  border-radius: var(--r-btn);
+  font-weight: 700;
+  padding: 0.5rem 1.1rem;
+  transition: transform 0.08s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn-primary {
+  color: var(--on-teal);
+  background-color: var(--teal);
+  border-color: var(--teal);
+}
+
+.btn-primary:hover, .btn-primary:focus {
+  background-color: var(--teal-dark);
+  border-color: var(--teal-dark);
+}
+
+.btn-outline-primary {
+  color: var(--teal);
+  border-color: var(--teal);
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--teal);
+  border-color: var(--teal);
+  color: var(--on-teal);
+}
+
+.btn-secondary, .btn-outline-secondary {
+  color: var(--text);
+  border-color: var(--border);
+  background-color: var(--surface-2);
+}
+
+.btn-secondary:hover, .btn-outline-secondary:hover {
+  background-color: var(--border);
+  color: var(--text);
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.2rem rgba(15, 118, 110, 0.25);
+}
+
+/* Hızlı erişim kartları (ana sayfa) */
+.kht-action-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-card);
+  box-shadow: var(--shadow-1);
+  padding: 1.4rem;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.kht-action-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-2);
+  color: inherit;
+}
+
+.kht-action-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--r-sm);
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+
+.kht-action-icon.bg-gelir { background: var(--success-bg); color: var(--success); }
+.kht-action-icon.bg-gider { background: var(--danger-bg); color: var(--danger); }
+.kht-action-icon.bg-islem { background: var(--surface-2); color: var(--teal); }
+.kht-action-icon.bg-ozet { background: var(--surface-2); color: var(--teal); }
+
+.kht-action-title {
+  font-weight: 700;
+  color: var(--text);
+}
+
+.kht-action-desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 0;
+}
+
+/* Rozetler (Gelir / Gider) */
+.badge.kht-badge-gelir {
+  background-color: var(--success-bg);
+  color: var(--success);
+  font-weight: 700;
+  border-radius: var(--r-chip);
+}
+
+.badge.kht-badge-gider {
+  background-color: var(--danger-bg);
+  color: var(--danger);
+  font-weight: 700;
+  border-radius: var(--r-chip);
+}
+
+.kht-amount-gelir { color: var(--success); font-weight: 700; }
+.kht-amount-gider { color: var(--danger); font-weight: 700; }
+
+/* Tablolar */
+.table {
+  --bs-table-bg: transparent;
+  color: var(--text);
+}
+
+.table thead th {
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  border-bottom-width: 1px;
+  border-color: var(--border);
+  font-weight: 800;
+}
+
+.table td, .table th {
+  border-color: var(--border);
+}
+
+.table-hover > tbody > tr:hover > * {
+  background-color: var(--surface-2);
+  color: var(--text);
+}
+
+.table-responsive {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-card);
+  box-shadow: var(--shadow-1);
+  padding: 0.25rem;
+}
+
+.table-responsive .table {
+  margin-bottom: 0;
+}
+
+/* Footer */
+.footer {
+  flex-shrink: 0;
+  padding: 1rem 0;
+  font-size: 0.9rem;
+  background: transparent;
+  color: var(--text-muted);
+}
+
+.footer a {
+  color: var(--text-muted);
+  text-decoration: underline;
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}
