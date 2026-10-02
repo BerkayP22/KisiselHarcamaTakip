@@ -1,0 +1,23 @@
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+<script>
+    // Not: ASP.NET Core, "decimal" tipindeki alanlar için asp-for kullanıldığında
+    // otomatik olarak jQuery'nin yerleşik "number" doğrulama kuralını (data-val-number)
+    // ekler. Bu kural yalnızca İngilizce/ABD ondalık biçimini (nokta ayraçlı) kabul eder
+    // ve Türkçe virgüllü ondalık girişini (ör. "1.250,50") istemci tarafında reddeder.
+    // Tutar alanları bu yüzden asp-for yerine elle yazılmış input'lar kullanıyor
+    // (doğrulama tamamen sunucudaki TutarModelBinder'a bırakılıyor). Aşağıdaki
+    // geçersiz kılma, ileride bir decimal alan asp-for ile kullanılırsa aynı sorunun
+    // tekrar yaşanmaması için bir güvenlik önlemidir: hem nokta hem virgül ondalık
+    // ayıracını kabul eder ve mesajı Türkçeleştirir.
+    $(function () {
+        if (window.jQuery && $.validator && $.validator.methods) {
+            $.validator.methods.number = function (value, element) {
+                if (this.optional(element)) {
+                    return true;
+                }
+                return /^-?(\d{1,3}(\.\d{3})*|\d+)([.,]\d+)?$/.test(value);
+            };
+        }
+    });
+</script>
