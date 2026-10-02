@@ -1,0 +1,40 @@
+@model IReadOnlyList<KisiselHarcamaTakip.Core.Entities.Kategori>
+@{
+    ViewData["Title"] = "Kategoriler";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1>Kategoriler</h1>
+        <p class="text-muted mb-0">Harcama kategorilerinizi görüntüleyin.</p>
+    </div>
+    <a class="btn btn-primary" asp-action="Create">Kategori ekle</a>
+</div>
+
+@if (TempData["SuccessMessage"] is string successMessage)
+{
+    <div class="alert alert-success" role="status">@successMessage</div>
+}
+
+@if (Model.Count == 0)
+{
+    <div class="alert alert-info">Henüz kategori eklenmemiş.</div>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead>
+                <tr>
+                    <th scope="col">Kategori adı</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var kategori in Model)
+                {
+                    <tr><td>@kategori.Ad</td></tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
